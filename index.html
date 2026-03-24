@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shriparna | Developer Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Tailwind Config for Colors -->
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    colors: {
+                        brandWhite: '#f8f9fc',
+                        brandIndigo: '#6366f1',
+                        brandPurple: '#8b5cf6',
+                        brandDark: '#0f172a',
+                        brandMuted: '#64748b',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        mono: ['Inter', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-brandWhite dark:bg-brandDark text-brandDark dark:text-gray-100 transition-colors duration-500 ease-in-out">
+
+    <!-- Fast Multi-Stage Intro Loader (Premium Light & Dark UI) -->
+    <div id="intro-screen" class="fixed inset-0 z-[9999] flex items-center justify-center bg-white dark:bg-[#050505] transition-transform duration-[800ms] ease-[cubic-bezier(0.85,0,0.15,1)] origin-top">
+        
+        <!-- Stage 1: Elegant Dual-Ring Loader -->
+        <div id="loader-circle" class="absolute flex flex-col items-center justify-center transition-all duration-300 ease-out opacity-100 scale-100">
+            <div class="relative w-12 h-12 flex items-center justify-center">
+                <!-- Soft background track -->
+                <div class="absolute w-full h-full border-[1.5px] border-gray-100 dark:border-gray-800 rounded-full"></div>
+                <!-- Sharp animated arc -->
+                <div class="absolute w-full h-full border-[1.5px] border-transparent border-t-brandIndigo border-r-brandIndigo rounded-full animate-[spin_0.8s_cubic-bezier(0.68,-0.55,0.26,1.55)_infinite]"></div>
+                <!-- Pulsing core -->
+                <div class="w-1.5 h-1.5 bg-brandIndigo rounded-full animate-pulse"></div>
+            </div>
+        </div>
+
+        <!-- Stage 2: Enter Button -->
+        <button id="enter-btn" class="group absolute opacity-0 scale-95 pointer-events-none transition-all duration-[500ms] ease-out flex flex-col items-center justify-center gap-2 px-8 py-6 text-[13px] font-bold tracking-[0.4em] text-gray-800 dark:text-gray-300 hover:text-brandIndigo dark:hover:text-white uppercase focus:outline-none">
+            <span class="transition-colors duration-300">Enter</span>
+            <span class="w-0 h-[2px] bg-brandIndigo dark:bg-white transition-all duration-300 ease-in-out group-hover:w-full group-hover:shadow-[0_0_12px_rgba(99,102,241,0.4)] dark:group-hover:shadow-[0_0_12px_rgba(255,255,255,0.8)]"></span>
+        </button>
+
+    </div>
+    
+    <script>
+        window.addEventListener('load', () => {
+            const introScreen = document.getElementById('intro-screen');
+            const loaderCircle = document.getElementById('loader-circle');
+            const enterBtn = document.getElementById('enter-btn');
+            
+            // Block scrolling
+            window.scrollTo(0,0);
+            document.body.style.overflow = 'hidden';
+            
+            // Stage 1 -> Stage 2: Extremely fast (700ms total loading)
+            setTimeout(() => {
+                if(loaderCircle) {
+                    loaderCircle.style.opacity = '0';
+                    loaderCircle.style.transform = 'scale(0.5)';
+                }
+                
+                setTimeout(() => {
+                    if(enterBtn) {
+                        enterBtn.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+                        enterBtn.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+                    }
+                }, 200); // Only 200ms gap
+            }, 700);
+
+            // Stage 3: Click Enter
+            if(enterBtn) {
+                enterBtn.addEventListener('click', () => {
+                    enterBtn.style.opacity = '0';
+                    enterBtn.style.transform = 'scale(0.9)';
+                    
+                    // Slide up much faster (800ms duration defined in CSS)
+                    setTimeout(() => {
+                        introScreen.style.transform = 'translateY(-100vh)';
+                        document.body.style.overflow = '';
+                        
+                        setTimeout(() => {
+                            introScreen.remove();
+                        }, 800);
+                    }, 200); // 200ms after button vanishes
+                });
+            }
+        });
+    </script>
+
+    <!-- Sticky Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md bg-white/70 dark:bg-brandDark/70 border-b border-gray-200 dark:border-gray-800" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#home" class="text-2xl font-bold tracking-tight relative group">
+                    Shriparna<span class="text-brandIndigo"></span>
+                </a>
+                
+                <div class="hidden md:flex space-x-8 items-center nav-links">
+                    <a href="#about" class="text-brandMuted hover:text-brandIndigo dark:hover:text-brandPurple font-medium transition-colors">About</a>
+                    <a href="#projects" class="text-brandMuted hover:text-brandIndigo dark:hover:text-brandPurple font-medium transition-colors">Projects</a>
+                    <a href="#skills" class="text-brandMuted hover:text-brandIndigo dark:hover:text-brandPurple font-medium transition-colors">Skills</a>
+                    <a href="#certifications" class="text-brandMuted hover:text-brandIndigo dark:hover:text-brandPurple font-medium transition-colors">Training</a>
+                    <a href="#contact" class="text-brandMuted hover:text-brandIndigo dark:hover:text-brandPurple font-medium transition-colors">Contact</a>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 hover:-translate-y-1 transition-transform">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen relative flex items-center pt-24 pb-12 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- LEFT: Text -->
+                <div class="text-center md:text-left motion-reveal">
+                    <p class="text-lg md:text-xl font-medium text-gray-800 dark:text-gray-200 mb-2">Hi, I'm</p>
+                    <h1 class="text-6xl md:text-[5.5rem] font-extrabold text-[#2d2e32] dark:text-gray-100 tracking-tight mb-4 leading-none" style="font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;">
+                        Shriparna
+                    </h1>
+                    
+                    <div class="text-[1.35rem] text-gray-500 dark:text-gray-400 mb-8 flex justify-center md:justify-start items-center h-8">
+                        <span id="typewriter"></span><span class="w-[2px] h-7 bg-gray-400 dark:bg-gray-500 ml-1 animate-pulse"></span>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-400 text-[17px] leading-relaxed mb-10 max-w-[500px] mx-auto md:mx-0">
+                        Passionate about leveraging technology to solve real-world problems. Building scalable and user-friendly applications natively focusing on efficient architectures.
+                    </p>
+                    
+                    <div class="flex flex-col items-center md:items-start gap-4">
+                        <!-- Row 1 -->
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3 w-full">
+                            <a href="https://github.com/shriparna14" target="_blank" class="bg-[#1a1a1a] dark:bg-gray-100 text-white dark:text-gray-900 px-6 py-[0.65rem] rounded-full text-sm font-semibold hover:scale-105 transition-transform flex items-center justify-center gap-2.5 shadow-sm border border-transparent">
+                                <i class="fab fa-github text-lg"></i> GitHub
+                            </a>
+                            <a href="https://linkedin.com/in/shriparna" target="_blank" class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 px-6 py-[0.65rem] rounded-full text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2.5 shadow-sm">
+                                <i class="fab fa-linkedin-in text-lg text-gray-600 dark:text-gray-400"></i> LinkedIn
+                            </a>
+                            <a href="cv.pdf" target="_blank" class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 px-6 py-[0.65rem] rounded-full text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2.5 shadow-sm">
+                                <i class="fas fa-external-link-alt text-gray-500 dark:text-gray-400"></i> View My Resume
+                            </a>
+                        </div>
+                        
+                        <!-- Row 2 -->
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3 w-full mt-1">
+                            <a href="cv.pdf" download="Shriparna_Resume.pdf" class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 px-6 py-[0.65rem] rounded-full text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2.5 shadow-sm">
+                                <i class="fas fa-download text-gray-500 dark:text-gray-400"></i> Download Resume
+                            </a>
+                            <a href="#contact" class="bg-[#1a1a1a] dark:bg-gray-100 text-white dark:text-gray-900 px-6 py-[0.65rem] rounded-full text-sm font-semibold hover:scale-105 transition-transform flex items-center justify-center gap-2.5 shadow-sm border border-transparent">
+                                Get in Touch
+                            </a>
+                        </div>
+                        
+                        <!-- Row 3: Social Icons -->
+                        <div class="flex justify-center md:justify-start gap-3 mt-4 w-full">
+                            <a href="https://github.com/shriparna14" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:text-gray-900 dark:hover:text-white">
+                                <i class="fab fa-github text-[1.35rem]"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/shriparna" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:text-brandIndigo dark:hover:text-brandIndigo">
+                                <i class="fab fa-linkedin-in text-[1.35rem]"></i>
+                            </a>
+                            <a href="#" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:text-pink-600 dark:hover:text-pink-500">
+                                <i class="fab fa-instagram text-[1.35rem]"></i>
+                            </a>
+                            <a href="mailto:shriparna2006@gmail.com" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:text-green-600 dark:hover:text-green-500">
+                                <i class="far fa-envelope text-[1.35rem]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Image with floating animation -->
+                <div class="relative flex justify-center md:justify-end motion-float mt-6 md:mt-0">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brandIndigo/30 to-brandPurple/30 blur-3xl rounded-full scale-110 -z-10"></div>
+                    <img src="./profile.jpeg" alt="Shriparna" class="w-72 h-[26rem] md:w-80 md:h-[30rem] object-cover object-center rounded-3xl shadow-2xl border-2 border-white dark:border-gray-800">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative bg-brandWhite dark:bg-brandDark border-y border-gray-100 dark:border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 motion-reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-2 text-brandDark dark:text-gray-100">About Me</h2>
+                <div class="w-16 h-1 bg-brandDark dark:bg-gray-100 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Main About Card -->
+            <div class="card-modern rounded-2xl p-6 md:p-8 mb-12 max-w-5xl mx-auto motion-reveal bg-white dark:bg-gray-900">
+                <div class="flex flex-col md:flex-row gap-8 items-center md:items-stretch">
+                    <!-- Left Image -->
+                    <div class="w-full md:w-1/3 flex-shrink-0">
+                        <div class="w-full h-80 md:h-full rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+                            <!-- Using Unsplash as a generalized professional portrait placeholder matching the layout style -->
+                            <img src="./profile.jpeg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 object-top" alt="Shriparna Profile">
+                        </div>
+                    </div>
+                    <!-- Right Text Content -->
+                    <div class="w-full md:w-2/3 flex flex-col justify-center space-y-5 text-gray-600 dark:text-gray-400 text-[15px] leading-relaxed text-left">
+                        <p>
+                            Hi! I’m Shriparna, a Computer Science student passionate about leveraging technology to solve real-world problems and create meaningful impact.
+                        </p>
+                        <p>
+                            My journey in tech started with curiosity and has grown into a strong commitment to continuous learning. From building full-stack applications like UpCraft to developing secure systems for data protection, I enjoy turning ideas into practical and impactful solutions.
+                        </p>
+                        <p>
+                            I’m particularly interested in full-stack development, where I focus on building end-to-end applications that combine intuitive user experiences with efficient and scalable backend systems.
+                        </p>
+                        <p>
+                            Beyond coding, I’m always exploring new technologies, improving my skills, and working on projects that challenge me to grow.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Highlights Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <!-- Highlight 1 -->
+                <div class="card-modern p-6 text-center motion-reveal flex flex-col items-center bg-white dark:bg-gray-900 mt-0">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-500 flex items-center justify-center text-xl mb-4 shadow-sm border border-blue-100 dark:border-blue-800">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="font-bold text-[15px] mb-2 text-brandDark dark:text-gray-100">Software Development</h3>
+                    <p class="text-[13px] text-gray-500 dark:text-gray-400 leading-snug">Building scalable applications with modern technologies.</p>
+                </div>
+                <!-- Highlight 2 -->
+                <div class="card-modern p-6 text-center motion-reveal delay-100 flex flex-col items-center bg-white dark:bg-gray-900 mt-0">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-50 dark:bg-purple-900/30 text-purple-500 flex items-center justify-center text-xl mb-4 shadow-sm border border-purple-100 dark:border-purple-800">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="font-bold text-[15px] mb-2 text-brandDark dark:text-gray-100">UI/UX Design</h3>
+                    <p class="text-[13px] text-gray-500 dark:text-gray-400 leading-snug">Creating intuitive and beautiful user experiences.</p>
+                </div>
+                <!-- Highlight 3 -->
+                <div class="card-modern p-6 text-center motion-reveal delay-200 flex flex-col items-center bg-white dark:bg-gray-900 mt-0">
+                    <div class="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/30 text-green-500 flex items-center justify-center text-xl mb-4 shadow-sm border border-green-100 dark:border-green-800">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="font-bold text-[15px] mb-2 text-brandDark dark:text-gray-100">Community Building</h3>
+                    <p class="text-[13px] text-gray-500 dark:text-gray-400 leading-snug">Connecting with fellow developers and learners.</p>
+                </div>
+                <!-- Highlight 4 -->
+                <div class="card-modern p-6 text-center motion-reveal delay-300 flex flex-col items-center bg-white dark:bg-gray-900 mt-0">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/30 text-orange-500 flex items-center justify-center text-xl mb-4 shadow-sm border border-orange-100 dark:border-orange-800">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="font-bold text-[15px] mb-2 text-brandDark dark:text-gray-100">Problem Solving</h3>
+                    <p class="text-[13px] text-gray-500 dark:text-gray-400 leading-snug">Tackling complex challenges with creative solutions.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 motion-reveal">
+                <h2 class="text-4xl font-bold mb-4">Featured Projects</h2>
+                <div class="w-16 h-1 bg-brandIndigo mx-auto rounded mb-4"></div>
+                <p class="text-brandMuted">A showcase of my recent work and personal projects.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Project 1: UpCraft -->
+                <div class="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl transition-all duration-300 motion-reveal group flex flex-col border border-gray-100 dark:border-gray-800 relative hover:-translate-y-1">
+                    <div class="relative overflow-hidden h-48 bg-gray-100 dark:bg-gray-800">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800&h=600&fit=crop" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brandIndigo/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col flex-grow">
+                        <h3 class="text-[1.35rem] font-bold mb-3 text-gray-900 dark:text-gray-100 leading-tight">UpCraft</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-[14px] mb-6 leading-relaxed flex-grow">
+                            A full-stack platform that enables users to learn new skills through courses, quizzes, and certifications, helping bridge the gap between learning and real-world opportunities.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">React</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">Node.js</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">Express</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">MongoDB</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">Tailwind</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">JWT</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://upcraft-site.vercel.app/" target="_blank" class="w-1/2 text-center border border-gray-200 dark:border-gray-700 hover:border-gray-900 dark:hover:border-white hover:text-gray-900 dark:hover:text-white text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-xl transition-all text-[13.5px] flex justify-center items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <i class="fas fa-external-link-alt text-[12px]"></i> Live Site
+                            </a>
+                            <a href="https://github.com/shriparna14/UpCraft" target="_blank" class="w-1/2 text-center border border-gray-200 dark:border-gray-700 hover:border-gray-900 dark:hover:border-white hover:text-gray-900 dark:hover:text-white text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-xl transition-all text-[13.5px] flex justify-center items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <i class="fab fa-github text-lg"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Secure File Management -->
+                <div class="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl transition-all duration-300 motion-reveal delay-100 group flex flex-col border border-gray-100 dark:border-gray-800 relative hover:-translate-y-1">
+                    <div class="relative overflow-hidden h-48 bg-gray-100 dark:bg-gray-800">
+                        <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=800&h=600&fit=crop" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col flex-grow">
+                        <h3 class="text-[1.35rem] font-bold mb-3 text-gray-900 dark:text-gray-100 leading-tight">Secure File Management System</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-[14px] mb-6 leading-relaxed flex-grow">
+                            A secure file storage and sharing system with encryption, role-based access control, and malware detection to ensure data protection.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">PHP</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">MySQL</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">JavaScript</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">AES Encryption</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">RBAC</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">ClamAV</span>
+                        </div>
+                        <a href="https://github.com/Galibbasha786/File_Management_System" target="_blank" class="w-full text-center border border-gray-200 dark:border-gray-700 hover:border-gray-900 hover:text-gray-900 dark:hover:border-white dark:hover:text-white text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-xl transition-all text-sm flex justify-center items-center gap-2 group-hover:bg-gray-50 dark:group-hover:bg-gray-800">
+                            <i class="fab fa-github text-lg"></i> View Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: WasteWise -->
+                <div class="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl transition-all duration-300 motion-reveal delay-200 group flex flex-col border border-gray-100 dark:border-gray-800 relative hover:-translate-y-1">
+                    <div class="relative overflow-hidden h-48 bg-gray-100 dark:bg-gray-800">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&h=600&fit=crop" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-green-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col flex-grow">
+                        <h3 class="text-[1.35rem] font-bold mb-3 text-gray-900 dark:text-gray-100 leading-tight">WasteWise</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-[14px] mb-6 leading-relaxed flex-grow">
+                            A sustainability-focused web application that helps users track waste, schedule pickups, and promote eco-friendly habits through analytics.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">HTML</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">CSS</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">JavaScript</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">PHP</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">Chart.js</span>
+                        </div>
+                        <a href="https://github.com/shriparna14/wastewise" target="_blank" class="w-full text-center border border-gray-200 dark:border-gray-700 hover:border-green-600 hover:text-green-600 dark:hover:border-green-500 dark:hover:text-green-500 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-xl transition-all text-sm flex justify-center items-center gap-2 group-hover:bg-green-50 dark:group-hover:bg-green-900/10">
+                            <i class="fab fa-github text-lg"></i> View Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4: TrackIt -->
+                <div class="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl transition-all duration-300 motion-reveal delay-300 group flex flex-col border border-gray-100 dark:border-gray-800 relative hover:-translate-y-1">
+                    <div class="relative overflow-hidden h-48 bg-gray-100 dark:bg-gray-800">
+                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=800&h=600&fit=crop" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col flex-grow">
+                        <h3 class="text-[1.35rem] font-bold mb-3 text-gray-900 dark:text-gray-100 leading-tight">TrackIt – UI/UX Design</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-[14px] mb-6 leading-relaxed flex-grow">
+                            A clean and minimal productivity tracking app designed in Figma with focus on usability, task management, and intuitive user flow.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">Figma</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">UI/UX</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">Design System</span>
+                            <span class="bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-[11px] font-semibold">Prototyping</span>
+                        </div>
+                        <a href="https://www.figma.com/proto/OKSsBtqgXp9smC5udovVBF/TrackIt?node-id=0-1&t=iVapdSDLw4qhvtYi-1" target="_blank" class="w-full text-center border border-gray-200 dark:border-gray-700 hover:border-blue-600 hover:text-blue-600 dark:hover:border-blue-500 dark:hover:text-blue-500 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-xl transition-all text-sm flex justify-center items-center gap-2 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10">
+                            <i class="fab fa-figma text-lg"></i> View Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Technologies -->
+    <section id="skills" class="py-24 relative bg-brandWhite dark:bg-brandDark border-y border-gray-100 dark:border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 motion-reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-2 text-brandDark dark:text-gray-100">Skills & Technologies</h2>
+                <div class="w-16 h-1 bg-brandDark dark:bg-gray-100 mx-auto mt-4 rounded-full mb-6"></div>
+                <p class="text-brandMuted">Technologies and tools I work with to bring ideas to life.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Category 1: Languages -->
+                <div data-aos="fade-up" class="bg-white dark:bg-gray-900 shadow-sm rounded-2xl p-8 border border-gray-100 dark:border-gray-800">
+                    <h3 class="font-bold text-xl mb-6 text-brandDark dark:text-gray-100">Languages</h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span data-aos="fade-up" data-aos-delay="100" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-code text-indigo-500 mr-1.5"></i>C++</span>
+                        <span data-aos="fade-up" data-aos-delay="150" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-code text-blue-500 mr-1.5"></i>C</span>
+                        <span data-aos="fade-up" data-aos-delay="200" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-js text-yellow-500 mr-1.5"></i>JavaScript</span>
+                        <span data-aos="fade-up" data-aos-delay="250" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-database text-blue-400 mr-1.5"></i>SQL</span>
+                        <span data-aos="fade-up" data-aos-delay="300" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-html5 text-orange-500 mr-1.5"></i>HTML</span>
+                        <span data-aos="fade-up" data-aos-delay="350" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-css3-alt text-blue-500 mr-1.5"></i>CSS</span>
+                    </div>
+                </div>
+
+                <!-- Category 2: Frontend -->
+                <div data-aos="fade-up" data-aos-delay="100" class="bg-white dark:bg-gray-900 shadow-sm rounded-2xl p-8 border border-gray-100 dark:border-gray-800">
+                    <h3 class="font-bold text-xl mb-6 text-brandDark dark:text-gray-100">Frontend</h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span data-aos="fade-up" data-aos-delay="200" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-react text-cyan-400 mr-1.5"></i>React.js</span>
+                        <span data-aos="fade-up" data-aos-delay="250" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-wind text-teal-400 mr-1.5"></i>Tailwind CSS</span>
+                        <span data-aos="fade-up" data-aos-delay="300" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-js text-yellow-500 mr-1.5"></i>JavaScript (ES6+)</span>
+                        <span data-aos="fade-up" data-aos-delay="350" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-bolt text-purple-500 mr-1.5"></i>Framer Motion</span>
+                        <span data-aos="fade-up" data-aos-delay="400" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-mobile-screen text-gray-500 mr-1.5"></i>Responsive Design</span>
+                        <span data-aos="fade-up" data-aos-delay="450" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-pen-nib text-pink-500 mr-1.5"></i>UI/UX Design</span>
+                    </div>
+                </div>
+
+                <!-- Category 3: Backend -->
+                <div data-aos="fade-up" data-aos-delay="200" class="bg-white dark:bg-gray-900 shadow-sm rounded-2xl p-8 border border-gray-100 dark:border-gray-800">
+                    <h3 class="font-bold text-xl mb-6 text-brandDark dark:text-gray-100">Backend</h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span data-aos="fade-up" data-aos-delay="300" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-node-js text-green-500 mr-1.5"></i>Node.js</span>
+                        <span data-aos="fade-up" data-aos-delay="350" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-server text-gray-400 mr-1.5"></i>Express.js</span>
+                        <span data-aos="fade-up" data-aos-delay="400" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-php text-indigo-400 mr-1.5"></i>PHP</span>
+                        <span data-aos="fade-up" data-aos-delay="450" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-network-wired text-blue-500 mr-1.5"></i>REST APIs</span>
+                        <span data-aos="fade-up" data-aos-delay="500" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-shield-halved text-green-600 mr-1.5"></i>Auth (JWT)</span>
+                    </div>
+                </div>
+
+                <!-- Category 4: Database -->
+                <div data-aos="fade-up" data-aos-delay="100" class="bg-white dark:bg-gray-900 shadow-sm rounded-2xl p-8 border border-gray-100 dark:border-gray-800">
+                    <h3 class="font-bold text-xl mb-6 text-brandDark dark:text-gray-100">Database</h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span data-aos="fade-up" data-aos-delay="200" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-leaf text-green-500 mr-1.5"></i>MongoDB</span>
+                        <span data-aos="fade-up" data-aos-delay="250" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-database text-blue-400 mr-1.5"></i>MySQL</span>
+                    </div>
+                </div>
+
+                <!-- Category 5: Tools & Design -->
+                <div data-aos="fade-up" data-aos-delay="200" class="bg-white dark:bg-gray-900 shadow-sm rounded-2xl p-8 border border-gray-100 dark:border-gray-800 md:col-span-2 lg:col-span-1">
+                    <h3 class="font-bold text-xl mb-6 text-brandDark dark:text-gray-100">Tools & Others</h3>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span data-aos="fade-up" data-aos-delay="300" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-git-alt text-orange-600 mr-1.5"></i>Git</span>
+                        <span data-aos="fade-up" data-aos-delay="350" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-github text-gray-900 dark:text-gray-100 mr-1.5"></i>GitHub</span>
+                        <span data-aos="fade-up" data-aos-delay="400" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-rocket text-orange-500 mr-1.5"></i>Postman</span>
+                        <span data-aos="fade-up" data-aos-delay="450" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-code text-blue-500 mr-1.5"></i>VS Code</span>
+                        <span data-aos="fade-up" data-aos-delay="500" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-solid fa-caret-up text-black dark:text-white mr-1.5"></i>Vercel</span>
+                        <span data-aos="fade-up" data-aos-delay="550" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-[13px] font-medium text-gray-700 dark:text-gray-300 transition-colors"><i class="fa-brands fa-figma text-pink-500 mr-1.5"></i>Figma</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications & Training -->
+    <section id="certifications" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 motion-reveal">
+                <h2 class="text-4xl font-bold mb-4">Certifications & Training</h2>
+                <div class="w-16 h-1 bg-brandIndigo mx-auto rounded mb-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <!-- Cert 2 -->
+                <div class="card-modern p-6 flex flex-col justify-between motion-reveal delay-100">
+                    <div>
+                        <div class="text-brandPurple text-3xl mb-4"><i class="fas fa-certificate"></i></div>
+                        <h3 class="font-bold text-lg mb-2">Fundamentals of Network Comm.</h3>
+                        <p class="text-brandMuted text-sm mb-1">Platform: Coursera</p>
+                        <p class="text-brandMuted text-sm font-mono">Date: Nov 2024</p>
+                    </div>
+                    <a href="Fundamentals%20of%20Network%20Communication.pdf" target="_blank" class="mt-6 text-sm font-semibold text-brandPurple hover:underline block">View Certificate &rarr;</a>
+                </div>
+
+                <!-- Cert 3 -->
+                <div class="card-modern p-6 flex flex-col justify-between motion-reveal delay-200">
+                    <div>
+                        <div class="text-gray-600 dark:text-gray-400 text-3xl mb-4"><i class="fas fa-certificate"></i></div>
+                        <h3 class="font-bold text-lg mb-2">Hardware & Operating Systems</h3>
+                        <p class="text-brandMuted text-sm mb-1">Platform: IBM</p>
+                        <p class="text-brandMuted text-sm font-mono">Date: Sep 2024</p>
+                    </div>
+                    <a href="Introduction%20to%20Hardware%20and%20Operating%20Systems.pdf" target="_blank" class="mt-6 text-sm font-semibold text-gray-600 dark:text-gray-400 hover:underline block">View Certificate &rarr;</a>
+                </div>
+
+                <!-- Cert 4 -->
+                <div class="card-modern p-6 flex flex-col justify-between motion-reveal">
+                    <div>
+                        <div class="text-green-600 dark:text-green-400 text-3xl mb-4"><i class="fas fa-certificate"></i></div>
+                        <h3 class="font-bold text-lg mb-2">Generative AI Tools</h3>
+                        <p class="text-brandMuted text-sm mb-1">Topic: AI & ChatGPT</p>
+                        <p class="text-brandMuted text-sm font-mono">Date: Dec 2024</p>
+                    </div>
+                    <a href="Master%20Generative%20AI%20%26%20Generative%20AI%20tools%20(ChatGPT%20%26%20more).pdf" target="_blank" class="mt-6 text-sm font-semibold text-green-600 dark:text-green-400 hover:underline block">View Certificate &rarr;</a>
+                </div>
+
+                <!-- Cert 5 -->
+                <div class="card-modern p-6 flex flex-col justify-between motion-reveal delay-100">
+                    <div>
+                        <div class="text-blue-600 dark:text-blue-400 text-3xl mb-4"><i class="fas fa-certificate"></i></div>
+                        <h3 class="font-bold text-lg mb-2">Peer-to-Peer Protocols & LANs</h3>
+                        <p class="text-brandMuted text-sm mb-1">Topic: Networking</p>
+                        <p class="text-brandMuted text-sm font-mono">Date: Jan 2025</p>
+                    </div>
+                    <a href="Peer-to-Peer%20Protocols%20and%20Local%20Area%20Networks.pdf" target="_blank" class="mt-6 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline block">View Certificate &rarr;</a>
+                </div>
+
+                <!-- Cert 6 -->
+                <div class="card-modern p-6 flex flex-col justify-between motion-reveal delay-200">
+                    <div>
+                        <div class="text-red-500 dark:text-red-400 text-3xl mb-4"><i class="fas fa-certificate"></i></div>
+                        <h3 class="font-bold text-lg mb-2">TCP/IP & Advanced Topics</h3>
+                        <p class="text-brandMuted text-sm mb-1">Topic: Networking</p>
+                        <p class="text-brandMuted text-sm font-mono">Date: Jan 2025</p>
+                    </div>
+                    <a href="TCP%20IP%20and%20Advanced%20Topics.pdf" target="_blank" class="mt-6 text-sm font-semibold text-red-500 dark:text-red-400 hover:underline block">View Certificate &rarr;</a>
+                </div>
+
+                <!-- Cert 7 -->
+                <div class="card-modern p-6 flex flex-col justify-between motion-reveal">
+                    <div>
+                        <div class="text-orange-500 dark:text-orange-400 text-3xl mb-4"><i class="fas fa-certificate"></i></div>
+                        <h3 class="font-bold text-lg mb-2">The Bits and Bytes of Networking</h3>
+                        <p class="text-brandMuted text-sm mb-1">Topic: Networking</p>
+                        <p class="text-brandMuted text-sm font-mono">Date: Feb 2025</p>
+                    </div>
+                    <a href="The%20Bits%20and%20Bytes%20of%20Computer%20Networking.pdf" target="_blank" class="mt-6 text-sm font-semibold text-orange-500 dark:text-orange-400 hover:underline block">View Certificate &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-24 relative bg-brandWhite dark:bg-brandDark border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 motion-reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-2 text-brandDark dark:text-gray-100">Education</h2>
+                <div class="w-16 h-1 bg-brandDark dark:bg-gray-100 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- University -->
+                <div class="card-modern rounded-2xl p-6 md:p-8 motion-reveal bg-white dark:bg-gray-900">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Icon Placeholder -->
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 rounded-full bg-[#1b365d] text-white flex items-center justify-center text-3xl shadow-sm">
+                                <i class="fas fa-university"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Middle & Right Content -->
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row justify-between items-start mb-1 gap-2">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Bachelor of Technology in Computer Science and Engineering</h3>
+                                <span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap border border-gray-200 dark:border-gray-700">Aug 2023 – Present</span>
+                            </div>
+                            
+                            <p class="text-[15px] text-gray-500 dark:text-gray-400 mb-4">Lovely Professional University | Phagwara, Punjab</p>
+                            
+                            <p class="text-[14px] text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                                Pursuing a strong foundation in computer science with a focus on software development, problem solving, and modern web technologies.
+                            </p>
+                            
+                            <div class="mb-2">
+                                <span class="text-[13px] font-bold text-gray-900 dark:text-gray-100 block mb-2">Highlights:</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-[12px] px-3 py-1 rounded">Data Structures</span>
+                                    <span class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-[12px] px-3 py-1 rounded">Web Development</span>
+                                    <span class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-[12px] px-3 py-1 rounded">Problem Solving</span>
+                                    <span class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-[12px] px-3 py-1 rounded">Programming Fundamentals</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- High School -->
+                <div class="card-modern rounded-2xl p-6 md:p-8 motion-reveal delay-100 bg-white dark:bg-gray-900">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Icon Placeholder -->
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 rounded-full bg-emerald-700 text-white flex items-center justify-center text-3xl shadow-sm">
+                                <i class="fas fa-school"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Middle & Right Content -->
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row justify-between items-start mb-1 gap-2">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Intermediate</h3>
+                                <span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap border border-gray-200 dark:border-gray-700">Apr 2022 – Apr 2023</span>
+                            </div>
+                            
+                            <p class="text-[15px] text-gray-500 dark:text-gray-400 mb-4">Ambika Bhawani Public School | Muzaffarpur, Bihar</p>
+                            
+                            <p class="text-[14px] text-gray-600 dark:text-gray-400 leading-relaxed">
+                                Completed higher secondary education with a focus on science subjects including physics, chemistry, and mathematics.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle School -->
+                <div class="card-modern rounded-2xl p-6 md:p-8 motion-reveal delay-200 bg-white dark:bg-gray-900">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Icon Placeholder -->
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 rounded-full bg-indigo-700 text-white flex items-center justify-center text-3xl shadow-sm">
+                                <i class="fas fa-book-reader"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Middle & Right Content -->
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row justify-between items-start mb-1 gap-2">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Matriculation</h3>
+                                <span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap border border-gray-200 dark:border-gray-700">Apr 2020 - Apr 2021</span>
+                            </div>
+                            
+                            <p class="text-[15px] text-gray-500 dark:text-gray-400 mb-4">Scholars Home School | Dehradun, Uttarakhand</p>
+                            
+                            <p class="text-[14px] text-gray-600 dark:text-gray-400 leading-relaxed">
+                                Built foundational academic knowledge with strong emphasis on analytical thinking and core subjects.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 motion-reveal">
+                <h2 class="text-4xl font-bold mb-4">Contact Me</h2>
+                <div class="w-16 h-1 bg-brandIndigo mx-auto rounded mb-6"></div>
+                <p class="text-xl text-brandMuted italic">"Let’s build something meaningful together."</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 bg-brandWhite dark:bg-brandDark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm motion-reveal">
+                
+                <!-- Contact Info -->
+                <div class="flex flex-col justify-center">
+                    <h3 class="text-2xl font-bold mb-6">Get In Touch</h3>
+                    <p class="text-brandMuted mb-8">Feel free to reach out for collaborations or just a friendly hello. I usually respond within 24 hours.</p>
+                    
+                    <div class="space-y-6">
+                        <a href="mailto:shriparna2006@gmail.com" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 bg-indigo-50 dark:bg-gray-800 text-brandIndigo rounded-full flex items-center justify-center group-hover:bg-brandIndigo group-hover:text-white transition-colors duration-300">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span class="text-brandMuted font-medium group-hover:text-brandIndigo transition-colors">shriparna2006@gmail.com</span>
+                        </a>
+                        <a href="https://linkedin.com/in/shriparna" target="_blank" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 bg-indigo-50 dark:bg-gray-800 text-brandIndigo rounded-full flex items-center justify-center group-hover:bg-brandIndigo group-hover:text-white transition-colors duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </div>
+                            <span class="text-brandMuted font-medium group-hover:text-brandIndigo transition-colors">linkedin.com/in/shriparna</span>
+                        </a>
+                        <a href="https://github.com/shriparna14" target="_blank" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 bg-indigo-50 dark:bg-gray-800 text-brandIndigo rounded-full flex items-center justify-center group-hover:bg-brandIndigo group-hover:text-white transition-colors duration-300">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <span class="text-brandMuted font-medium group-hover:text-brandIndigo transition-colors">github.com/shriparna14</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div>
+                    <form id="contact-form" class="space-y-5 relative">
+                        <div class="input-group">
+                            <label class="sr-only" for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your Name" required class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brandIndigo focus:border-transparent transition-all duration-300 hover:border-brandIndigo">
+                        </div>
+                        <div class="input-group">
+                            <label class="sr-only" for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your Email" required class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brandIndigo focus:border-transparent transition-all duration-300 hover:border-brandIndigo">
+                        </div>
+                        <div class="input-group">
+                            <label class="sr-only" for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Subject" required class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brandIndigo focus:border-transparent transition-all duration-300 hover:border-brandIndigo">
+                        </div>
+                        <div class="input-group">
+                            <label class="sr-only" for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Your Message" required class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brandIndigo focus:border-transparent transition-all duration-300 hover:border-brandIndigo"></textarea>
+                        </div>
+                        
+                        <button type="submit" id="submit-btn" class="w-full btn-primary !py-3.5 flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-75 disabled:cursor-not-allowed">
+                            <span id="btn-text">Send Message</span> 
+                            <i id="btn-icon" class="fas fa-paper-plane"></i>
+                        </button>
+                        
+                        <!-- Smooth Feedback Message Area -->
+                        <div id="form-message" class="hidden text-center text-[14px] font-semibold rounded-xl px-4 py-3 mt-4 transition-all duration-300"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-sm text-brandMuted border-t border-gray-200 dark:border-gray-800 bg-brandWhite dark:bg-brandDark">
+        <p>Built with intention and scale by Shriparna. &copy; 2026</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

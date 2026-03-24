@@ -1,0 +1,213 @@
+/* Base CSS & Utilities */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+/* Global Buttons */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #6366f1; /* brandIndigo */
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+}
+.btn-primary:hover {
+    background-color: #4f46e5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
+    color: #6366f1;
+    background-color: #eef2ff;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+    background-color: #e0e7ff;
+    transform: translateY(-2px);
+}
+.dark .btn-secondary {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: #818cf8;
+}
+.dark .btn-secondary:hover {
+    background-color: rgba(99, 102, 241, 0.2);
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    background-color: transparent;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+}
+.btn-outline:hover {
+    background-color: #f1f5f9;
+    transform: translateY(-2px);
+}
+.dark .btn-outline {
+    color: #f8f9fc;
+    border-color: #334155;
+}
+.dark .btn-outline:hover {
+    background-color: #1e293b;
+}
+
+/* Card Styling */
+.card-modern {
+    background-color: #ffffff;
+    border: 1px solid #f1f5f9;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    cursor: pointer;
+}
+.card-modern:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.dark .card-modern {
+    background-color: #111827;
+    border-color: #1f2937;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+.dark .card-modern:hover {
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+}
+
+.card-base {
+    background-color: #ffffff;
+    border: 1px solid #f1f5f9;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+.card-base:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+.dark .card-base {
+    background-color: #111827;
+    border-color: #1f2937;
+}
+.dark .card-base:hover {
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+}
+
+/* Pill tags */
+.skill-pill {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #475569;
+    background-color: #f1f5f9;
+    border-radius: 9999px;
+    font-family: 'Inter', monospace;
+}
+.dark .skill-pill {
+    color: #cbd5e1;
+    background-color: #1e293b;
+}
+
+/* Active Nav Links styling */
+.nav-links a.active {
+    color: #6366f1;
+}
+
+/* Subtle Floating Animation for Hero Image */
+.motion-float {
+    animation: floating 4s ease-in-out infinite alternate;
+}
+@keyframes floating {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+
+/* Input Focus Glow */
+.input-group input:focus, .input-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Aesthetic Skills Section Animations */
+/* Category Cards */
+#skills .grid > div {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
+}
+
+#skills .grid > div:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    border-color: rgba(99, 102, 241, 0.4) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(99, 102, 241, 0.15) !important;
+}
+
+.dark #skills .grid > div:hover {
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(99, 102, 241, 0.2) !important;
+}
+
+/* Shimmer Effect on Category Cards */
+#skills .grid > div::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -150%;
+    width: 60%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.1), transparent);
+    transform: skewX(-20deg);
+    transition: all 0.6s ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+}
+#skills .grid > div:hover::before {
+    left: 150%;
+}
+.dark #skills .grid > div::before {
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.04), transparent);
+}
+
+/* Skill Chips Interactivity */
+#skills .grid > div .flex span {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    cursor: default;
+    display: inline-block;
+}
+
+#skills .grid > div .flex span:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.25), 0 4px 6px -2px rgba(99, 102, 241, 0.15) !important;
+    color: #6366f1 !important;
+    background-color: rgba(99, 102, 241, 0.08) !important;
+}
+
+.dark #skills .grid > div .flex span:hover {
+    color: #a5b4fc !important;
+    background-color: rgba(99, 102, 241, 0.2) !important;
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4), 0 4px 6px -2px rgba(99, 102, 241, 0.2) !important;
+}
